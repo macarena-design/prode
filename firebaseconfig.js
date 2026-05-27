@@ -37,7 +37,7 @@ const ALLOWED_EMAILS = [
 ];
 
 /* ---- Inicialización de Firebase ---- */
-firebase.initializeApp(FIREBASE_CONFIG);
+const app = initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db   = firebase.firestore();
