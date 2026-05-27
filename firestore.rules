@@ -7,7 +7,7 @@ service cloud.firestore {
       return request.auth != null &&
         request.auth.token.email in [
           'macarena@dtcomunicacion.com',
-          'emi@dtcomunicacion.com'  // reemplazar con email de Emi
+          'emilianobenavente@dtcomunicacion.com'  // reemplazar con email de Emi
         ];
     }
 
