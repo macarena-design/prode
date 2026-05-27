@@ -1,3 +1,20 @@
+/* =========================================================
+   PRODE DT — Configuración de Firebase
+
+   INSTRUCCIONES:
+   1. Ir a https://console.firebase.google.com/
+   2. Crear un proyecto (ej: "prode-dt-2026")
+   3. Habilitar Authentication > Sign-in method > Google
+   4. Crear Firestore Database (modo producción)
+   5. Ir a Project Settings > Your apps > Add Web App
+   6. Copiar los valores de firebaseConfig aquí abajo
+   7. En Firestore, aplicar las reglas del archivo
+      firestore.rules
+
+   ADMIN EMAILS: los usuarios con estos emails tendrán
+   acceso al panel de administración para cargar resultados.
+   ========================================================= */
+
 const FIREBASE_CONFIG = {
   apiKey:            "AIzaSyC8-2XyksGfaX-KRFZl-MGji9wL65SKzhc",
   authDomain:        "prode-dt-2026.firebaseapp.com",
