@@ -10,11 +10,11 @@ const FIREBASE_CONFIG = {
 /* Emails con acceso admin (cargar resultados, gestionar etapas) */
 const ADMIN_EMAILS = [
   "macarena@dtcomunicacion.com",
-  "emilianobenavente@dtcomunicacion.com",
+  "emilianobenavente@dtcomunicacion.com",        // reemplazar con el email correcto de Emi
 ];
 
 /* Emails permitidos para jugar (dejar vacío [] para permitir cualquier Google account) */
-const ALLOWED_EMAILS = [tania@dtcomunicacion.com , federicamartinez@dtcomunicacion.com , emilianobenavente@dtcomunicacion.com, macarena@dtcomunicacion.com, tomas@dtcomunicacion.com, diana@dtcomunicacion.com, manuel@dtcomunicacion.com, andresprillo@dtcomunicacion.com, rociovallbona@dtcomunicacion.com]
+const ALLOWED_EMAILS = [
   /* Si querés restringir solo al equipo DT, completar con los emails.
      Si se deja vacío, cualquiera con Google puede entrar (compartir el link es suficiente). */
 ];
