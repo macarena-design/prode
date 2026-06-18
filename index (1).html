@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prode DT — Copa Mundial 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <img src="../_agency/_us/_brandguidelines/_logos/Logo_DT 2023_sobre negro.png" alt="DT Comunicación" class="login-logo-img" onerror="this.style.display='none'">
+      <div class="login-logo-fallback">DT</div>
+    </div>
+    <h1 class="login-title">Prode DT</h1>
+    <p class="login-subtitle">Copa Mundial de la FIFA 2026™</p>
+    <p class="login-desc">Ingresá con tu cuenta de Google y empezá a pronosticar los partidos del mundial con el equipo.</p>
+    <button id="btn-google-login" class="btn-google">
+      <svg viewBox="0 0 24 24" width="20" height="20" style="flex-shrink:0">
+        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+      </svg>
+      Ingresar con Google
+    </button>
+    <p class="login-team-note">⚽ Acceso exclusivo para el equipo DT</p>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app" class="hidden">
+
+  <!-- HEADER -->
+  <header id="main-header">
+    <div class="header-inner">
+      <div class="header-logo">
+        <img src="../_agency/_us/_brandguidelines/_logos/Logo_DT 2023_sobre negro.png" alt="DT" class="header-logo-img" onerror="this.style.display='none'">
+        <span class="header-logo-text">DT</span>
+        <span class="header-separator">|</span>
+        <span class="header-prode">Prode</span>
+      </div>
+      <nav class="main-nav" id="main-nav">
+        <button class="nav-btn active" data-view="jugar">JUGAR</button>
+        <button class="nav-btn" data-view="posiciones">POSICIONES</button>
+        <button class="nav-btn" data-view="como-jugar">CÓMO JUGAR</button>
+        <button class="nav-btn admin-btn hidden" data-view="admin">ADMIN</button>
+      </nav>
+      <div class="header-user">
+        <img id="user-photo" class="user-avatar" src="" alt="" onerror="this.style.display='none'">
+        <span id="user-name" class="user-name"></span>
+        <button id="btn-logout" class="btn-logout">Salir</button>
+      </div>
+      <button class="mobile-menu-btn" id="mobile-menu-btn">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <!-- Mobile nav -->
+    <div class="mobile-nav hidden" id="mobile-nav">
+      <button class="nav-btn active" data-view="jugar" data-mobile="true">⚽ JUGAR</button>
+      <button class="nav-btn" data-view="posiciones" data-mobile="true">🏆 POSICIONES</button>
+      <button class="nav-btn" data-view="como-jugar" data-mobile="true">📖 CÓMO JUGAR</button>
+      <button class="nav-btn admin-btn hidden" data-view="admin" data-mobile="true">⚙️ ADMIN</button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main id="main-content">
+
+    <!-- ===== VIEW: JUGAR ===== -->
+    <div id="view-jugar" class="view active">
+
+      <div class="tournament-hero">
+        <div class="tournament-hero-inner">
+          <div class="tournament-icon">🏆</div>
+          <div>
+            <h2 class="tournament-name">Copa Mundial de la FIFA 2026™</h2>
+            <p class="tournament-stage-label" id="active-stage-label">Fase de Grupos · Fecha 1</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tabs-bar">
+        <div class="stage-tabs" id="stage-tabs">
+          <button class="stage-tab active" data-stage="group">FASE DE GRUPOS</button>
+          <button class="stage-tab" data-stage="knockout">FASE FINAL</button>
+        </div>
+      </div>
+
+      <div class="subtabs-bar" id="subtabs-bar">
+        <!-- Group matchday tabs -->
+        <div class="matchday-tabs" id="group-matchday-tabs">
+          <button class="matchday-tab active" data-matchday="1">FECHA 1</button>
+          <button class="matchday-tab" data-matchday="2">FECHA 2</button>
+          <button class="matchday-tab" data-matchday="3">FECHA 3</button>
+        </div>
+        <!-- Knockout round tabs (hidden by default) -->
+        <div class="matchday-tabs hidden" id="knockout-round-tabs">
+          <button class="matchday-tab" data-round="r32">RONDA DE 32</button>
+          <button class="matchday-tab" data-round="r16">OCTAVOS</button>
+          <button class="matchday-tab" data-round="qf">CUARTOS</button>
+          <button class="matchday-tab" data-round="sf">SEMIFINALES</button>
+          <button class="matchday-tab" data-round="final">FINAL</button>
+        </div>
+      </div>
+
+      <div class="matches-wrapper" id="matches-wrapper">
+        <div class="matches-date-group" id="matches-container">
+          <div class="loading-state">
+            <div class="spinner-small"></div>
+            <p>Cargando partidos...</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="save-bar hidden" id="save-bar">
+        <span id="save-bar-msg">Tenés cambios sin guardar</span>
+        <button id="btn-save-predictions" class="btn-save">Guardar pronósticos</button>
+      </div>
+    </div>
+
+    <!-- ===== VIEW: POSICIONES ===== -->
+    <div id="view-posiciones" class="view hidden">
+      <div class="section-hero">
+        <h2>Tabla de Posiciones</h2>
+      </div>
+      <div class="standings-controls">
+        <div class="standings-type-tabs">
+          <button class="stype-tab active" data-stype="general">GENERALES</button>
+          <button class="stype-tab" data-stype="matchday">POR FECHA</button>
+        </div>
+        <div class="standings-matchday-select hidden" id="standings-matchday-select">
+          <select id="standings-matchday-picker">
+            <option value="group-1">Grupos · Fecha 1</option>
+            <option value="group-2">Grupos · Fecha 2</option>
+            <option value="group-3">Grupos · Fecha 3</option>
+            <option value="r32">Ronda de 32</option>
+            <option value="r16">Octavos</option>
+            <option value="qf">Cuartos</option>
+            <option value="sf">Semifinales</option>
+            <option value="final">Final</option>
+          </select>
+        </div>
+        <div class="standings-search-wrap">
+          <input type="text" id="standings-search" placeholder="🔍 Buscar jugador...">
+        </div>
+      </div>
+      <div id="standings-container">
+        <div class="loading-state">
+          <div class="spinner-small"></div>
+          <p>Calculando posiciones...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== VIEW: CÓMO JUGAR ===== -->
+    <div id="view-como-jugar" class="view hidden">
+      <div class="rules-page">
+        <h2>Cómo jugar</h2>
+
+        <h3>Reglamento general</h3>
+        <p>Podés comenzar a pronosticar los partidos de las fechas habilitadas del torneo. Tenés tiempo para cargar o modificar tu resultado hasta el horario de comienzo del partido. Sólo se bloquean los partidos que ya comenzaron.</p>
+
+        <h3>Método de calificación</h3>
+        <p>Los puntos que obtenés al acertar resultados se asignan de la siguiente forma:</p>
+
+        <div class="rules-points-list">
+          <div class="rule-item">
+            <span class="rule-badge gold">12 pts</span>
+            <div class="rule-text">
+              <strong>A) Marcador exacto</strong>
+              <p>Acertás la cantidad exacta de goles de ambos equipos</p>
+            </div>
+          </div>
+          <div class="rule-item">
+            <span class="rule-badge purple">5 pts</span>
+            <div class="rule-text">
+              <strong>B) Resultado correcto</strong>
+              <p>Acertás el ganador o el empate (sin marcador exacto)</p>
+            </div>
+          </div>
+          <div class="rule-item">
+            <span class="rule-badge gray">2 pts</span>
+            <div class="rule-text">
+              <strong>C) Goles de un equipo</strong>
+              <p>Acertás la cantidad de goles de uno solo de los equipos</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="rules-note">Las reglas B y C son acumulativas. El máximo sin marcador exacto es 9 pts (resultado + goles de ambos equipos con resultado incorrecto).</div>
+
+        <h3>Ejemplo: Argentina 3 - 1 Francia</h3>
+        <div class="example-table">
+          <div class="example-header">
+            <span>Tu pronóstico</span><span>Pts</span><span>Razón</span>
+          </div>
+          <div class="example-row highlight">
+            <span>Argentina <b>3 - 1</b> Francia</span><span class="pts-val gold">12</span><span>Marcador exacto ⭐</span>
+          </div>
+          <div class="example-row">
+            <span>Argentina <b>3 - 0</b> Francia</span><span class="pts-val">7</span><span>Ganador + goles Arg (3)</span>
+          </div>
+          <div class="example-row">
+            <span>Argentina <b>2 - 1</b> Francia</span><span class="pts-val">7</span><span>Ganador + goles Fra (1)</span>
+          </div>
+          <div class="example-row">
+            <span>Argentina <b>2 - 0</b> Francia</span><span class="pts-val">5</span><span>Solo ganador</span>
+          </div>
+          <div class="example-row">
+            <span>Argentina <b>0 - 1</b> Francia</span><span class="pts-val">2</span><span>Goles Fra (1)</span>
+          </div>
+          <div class="example-row">
+            <span>Argentina <b>3 - 3</b> Francia</span><span class="pts-val">2</span><span>Goles Arg (3)</span>
+          </div>
+          <div class="example-row dim">
+            <span>Argentina <b>0 - 2</b> Francia</span><span class="pts-val dim">0</span><span>Sin aciertos</span>
+          </div>
+        </div>
+
+        <h3>Situación de empate en puntos</h3>
+        <ol class="rules-list">
+          <li><strong>1ª cláusula:</strong> Mayor cantidad de resultados exactos en la fecha</li>
+          <li><strong>2ª cláusula:</strong> Mayor cantidad de resultados exactos en el torneo</li>
+          <li><strong>3ª cláusula:</strong> Cuenta activada antes (registro más antiguo)</li>
+        </ol>
+
+        <h3>Fase Final — Partidos con penales</h3>
+        <p>Desde la Ronda de 32 en adelante, si tu pronóstico es empate, se habilitará un selector para elegir el ganador por penales.</p>
+        <div class="rules-points-list">
+          <div class="rule-item">
+            <span class="rule-badge special">17 pts</span>
+            <div class="rule-text"><strong>Marcador exacto + ganador penales correcto</strong></div>
+          </div>
+          <div class="rule-item">
+            <span class="rule-badge gold">12 pts</span>
+            <div class="rule-text"><strong>Marcador exacto (penales incorrectos o no predichos)</strong></div>
+          </div>
+          <div class="rule-item">
+            <span class="rule-badge purple">10 pts</span>
+            <div class="rule-text"><strong>Resultado no exacto + ganador penales correcto</strong></div>
+          </div>
+          <div class="rule-item">
+            <span class="rule-badge gray">5 pts</span>
+            <div class="rule-text"><strong>Resultado no exacto (ganador penales incorrecto)</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== VIEW: ADMIN ===== -->
+    <div id="view-admin" class="view hidden">
+      <div class="admin-page">
+        <h2>Panel de Administración</h2>
+
+        <div class="admin-card">
+          <h3>Inicializar datos</h3>
+          <p>Carga todos los partidos del Mundial en Firestore. Hacelo solo una vez al inicio.</p>
+          <button id="btn-seed-matches" class="btn-admin-action">🚀 Cargar partidos en base de datos</button>
+          <div id="seed-result" class="admin-feedback"></div>
+        </div>
+
+        <div class="admin-card">
+          <h3>Corregir fixture en base de datos</h3>
+          <p>Actualiza equipos, fechas y horarios de todos los partidos <strong>sin borrar resultados ya cargados</strong>. Usalo cuando el fixture cambia pero ya hay resultados ingresados.</p>
+          <button id="btn-update-fixture" class="btn-admin-action">🔧 Corregir fixture (sin borrar resultados)</button>
+          <div id="update-fixture-result" class="admin-feedback"></div>
+        </div>
+
+        <div class="admin-card">
+          <h3>Sincronización automática de resultados</h3>
+          <p>Obtiene resultados en tiempo real desde ESPN. Se actualiza automáticamente cada 5 minutos mientras el panel esté abierto.</p>
+          <button id="btn-espn-sync" class="btn-admin-action">🔄 Sincronizar ahora</button>
+          <div id="espn-sync-status" class="admin-feedback"></div>
+        </div>
+
+        <div class="admin-card">
+          <h3>Cargar resultados de partidos</h3>
+          <div class="admin-filters">
+            <label>Etapa:</label>
+            <select id="admin-stage-filter" class="admin-select">
+              <option value="group-1">Grupos · Fecha 1</option>
+              <option value="group-2">Grupos · Fecha 2</option>
+              <option value="group-3">Grupos · Fecha 3</option>
+              <option value="r32">Ronda de 32</option>
+              <option value="r16">Octavos</option>
+              <option value="qf">Cuartos</option>
+              <option value="sf">Semifinales</option>
+              <option value="final">Final</option>
+            </select>
+          </div>
+          <div id="admin-matches-list"></div>
+        </div>
+
+        <div class="admin-card">
+          <h3>Actualizar equipos en fase final</h3>
+          <p>Cuando se definan los equipos de la Fase Final, podés actualizar los partidos aquí.</p>
+          <div id="admin-knockout-list"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <span class="footer-brand">DT Comunicación © 2026</span>
+      <div class="footer-links">
+        <button class="footer-link" data-view="como-jugar">CÓMO JUGAR</button>
+        <a class="footer-link" href="mailto:hola@dtcomunicacion.com">SOPORTE</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<!-- LOADING OVERLAY -->
+<div id="loading-overlay" class="hidden">
+  <div class="loader-box">
+    <div class="spinner"></div>
+    <p>Cargando...</p>
+  </div>
+</div>
+
+<!-- TOAST NOTIFICATIONS -->
+<div id="toast-container"></div>
+
+<!-- Firebase SDK v9 compat -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
+<script src="firebase-config.js"></script>
+<script src="matches.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
