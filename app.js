@@ -1002,7 +1002,13 @@ async function syncScoresFromESPN(showFeedback) {
   const tomorrowStr = tomorrow.toISOString().slice(0, 10).replace(/-/g, '');
   const dates = [...new Set([...pastMatchDates, tomorrowStr])];
 
+  const FINISHED_STATUSES = new Set([
+    'STATUS_FINAL', 'STATUS_FULL_TIME', 'STATUS_FT',
+    'STATUS_FULL_PEN', 'STATUS_PENALTY', 'STATUS_AET',
+  ]);
+
   let updated = 0;
+  let espnEventsFound = 0;
 
   try {
     for (const dateStr of dates) {
@@ -1020,8 +1026,9 @@ async function syncScoresFromESPN(showFeedback) {
         if (!comp) continue;
 
         const statusName = comp.status?.type?.name || event.status?.type?.name || '';
-        if (statusName !== 'STATUS_FINAL') continue; // only save finished matches
+        if (!FINISHED_STATUSES.has(statusName)) continue;
 
+        espnEventsFound++;
         const competitors = comp.competitors || [];
         const homeComp = competitors.find(c => c.homeAway === 'home') || competitors[0];
         const awayComp = competitors.find(c => c.homeAway === 'away') || competitors[1];
@@ -1029,15 +1036,21 @@ async function syncScoresFromESPN(showFeedback) {
 
         const espnHome = resolveESPNTeam(homeComp.team?.abbreviation, homeComp.team?.displayName);
         const espnAway = resolveESPNTeam(awayComp.team?.abbreviation, awayComp.team?.displayName);
-        if (!espnHome || !espnAway) continue;
+
+        if (!espnHome || !espnAway) {
+          console.warn('[ESPN sync] equipo no reconocido:', homeComp.team?.abbreviation, homeComp.team?.displayName, '/', awayComp.team?.abbreviation, awayComp.team?.displayName);
+          continue;
+        }
 
         // Find the MATCHES entry by team codes (home/away order may be inverted)
         const match = MATCHES.find(m =>
-          m.stage === 'group' &&
-          ((m.home === espnHome && m.away === espnAway) ||
-           (m.home === espnAway && m.away === espnHome))
+          (m.home === espnHome && m.away === espnAway) ||
+          (m.home === espnAway && m.away === espnHome)
         );
-        if (!match) continue;
+        if (!match) {
+          console.warn('[ESPN sync] partido no encontrado en fixture:', espnHome, 'vs', espnAway);
+          continue;
+        }
 
         let hScore = parseInt(homeComp.score);
         let aScore = parseInt(awayComp.score);
@@ -1063,8 +1076,11 @@ async function syncScoresFromESPN(showFeedback) {
           };
           await db.collection('matches').doc(match.id).set(payload, { merge: true });
           State.remoteMatches[match.id] = { ...(State.remoteMatches[match.id] || {}), ...payload };
+          console.log('[ESPN sync] guardado:', match.id, match.home, hScore, '-', aScore, match.away);
           updated++;
-        } catch (_) { /* Firestore write error — skip */ }
+        } catch (e) {
+          console.error('[ESPN sync] error Firestore:', match.id, e);
+        }
       }
     }
 
@@ -1073,15 +1089,18 @@ async function syncScoresFromESPN(showFeedback) {
       if (updated > 0) {
         syncStatus.textContent = `✅ ${updated} partido${updated !== 1 ? 's' : ''} actualizado${updated !== 1 ? 's' : ''} · ${now}`;
         syncStatus.style.color = 'var(--green)';
-        renderAdminMatchList(); // refresh admin list
-        // Also refresh the match view so all users see new scores
+        renderAdminMatchList();
         if (State.currentView === 'jugar') renderMatchesView();
         if (State.currentView === 'posiciones') renderStandings();
+      } else if (espnEventsFound === 0) {
+        syncStatus.textContent = `ESPN no devolvió partidos finalizados · ${now}`;
+        syncStatus.style.color = 'var(--yellow)';
       } else {
-        syncStatus.textContent = `Sin cambios nuevos · ${now}`;
+        syncStatus.textContent = `Sin cambios nuevos (${espnEventsFound} partidos en ESPN) · ${now}`;
         syncStatus.style.color = 'var(--gray-mid)';
       }
     }
+    console.log(`[ESPN sync] eventos ESPN encontrados: ${espnEventsFound}, actualizados: ${updated}`);
     if (showFeedback && updated > 0) {
       showToast(`✅ ${updated} resultado${updated !== 1 ? 's' : ''} sincronizado${updated !== 1 ? 's' : ''}`, 'success');
     }
